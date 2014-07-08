@@ -2,6 +2,8 @@ ServerInterconnect
 ==================
 A quick and secure solution for all java client-server needs.
 
+[Click here for JavaDoc](http://docs.njay.net/serverinterconnect/)
+
 Tutorial
 ======================
 
