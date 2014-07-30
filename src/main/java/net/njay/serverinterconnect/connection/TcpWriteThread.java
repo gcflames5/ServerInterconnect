@@ -21,7 +21,7 @@ public class TcpWriteThread extends Thread{
 				if (p == null) 
 					continue;
 				Packet.writePacket(p, conn.outputStream());
-			} catch (InterruptedException | IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}			
 		}

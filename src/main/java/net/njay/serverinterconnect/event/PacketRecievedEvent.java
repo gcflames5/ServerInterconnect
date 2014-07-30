@@ -1,10 +1,10 @@
 package net.njay.serverinterconnect.event;
 
-import net.njay.customevents.event.Event;
+import event.Event;
 import net.njay.serverinterconnect.connection.TcpConnection;
 import net.njay.serverinterconnect.packet.Packet;
 
-public class PacketRecievedEvent extends Event{
+public class PacketRecievedEvent extends Event {
 
     private TcpConnection conn;
 	private Packet packet;

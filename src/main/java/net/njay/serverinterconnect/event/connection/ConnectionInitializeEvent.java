@@ -1,6 +1,6 @@
 package net.njay.serverinterconnect.event.connection;
 
-import net.njay.customevents.event.Event;
+import event.Event;
 import net.njay.serverinterconnect.connection.TcpConnection;
 
 /**

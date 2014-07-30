@@ -2,8 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.njay</groupId>
   <artifactId>ServerInterconnect</artifactId>
-  <version>1.0.0</version>
-  
+  <version>1.1.0</version>
   
   <dependencies>
      <dependency>
@@ -19,9 +18,32 @@
       <dependency>
           <groupId>net.njay</groupId>
           <artifactId>CustomEvents</artifactId>
-          <version>1.0.0</version>
+          <version>1.0.2</version>
+      </dependency>
+      <dependency>
+          <groupId>com.google.code.gson</groupId>
+          <artifactId>gson</artifactId>
+          <version>2.2.4</version>
       </dependency>
   </dependencies>
+
+    <repositories>
+        <repository>
+            <id>njay-deployment</id>
+            <url>http://repo.njay.net/nexus/content/groups/public</url>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>njay-deployment</id>
+            <url>http://repo.njay.net/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>njay-deployment</id>
+            <url>http://repo.njay.net/content/repositories/releases</url>
+        </repository>
+    </distributionManagement>
 
 <build>
     <defaultGoal>install</defaultGoal>

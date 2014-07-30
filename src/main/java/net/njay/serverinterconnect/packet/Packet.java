@@ -1,5 +1,7 @@
 package net.njay.serverinterconnect.packet;
 
+import com.google.gson.Gson;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -28,8 +30,13 @@ public abstract class Packet {
 		if (packetID >= registry.size())
 			throw new RuntimeException("Invalid Packet id " + packetID);
 		Packet packet = getNewPacket(packetID);
-		packet.readPacketContent(input);
-		return packet;
+        if (packet instanceof JsonPacket) {
+            String json = readString(input);
+            return new Gson().fromJson(json, packet.getClass());
+        }else{
+            packet.readPacketContent(input);
+            return packet;
+        }
 	}
 	
 	public static void writePacket(Packet packet, DataOutputStream output) throws IOException{

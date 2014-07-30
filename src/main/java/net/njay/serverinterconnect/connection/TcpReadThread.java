@@ -2,7 +2,7 @@ package net.njay.serverinterconnect.connection;
 
 import java.io.IOException;
 
-import net.njay.customevents.event.Event;
+import event.Event;
 import net.njay.serverinterconnect.event.PacketRecievedEvent;
 import net.njay.serverinterconnect.packet.Packet;
 
