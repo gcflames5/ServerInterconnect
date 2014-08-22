@@ -1,18 +1,18 @@
 package net.njay.serverinterconnect.single.server;
 
+import net.njay.serverinterconnect.api.connection.Connection;
+import net.njay.serverinterconnect.api.manager.ServerManager;
+import net.njay.serverinterconnect.api.packet.Packet;
+
+import javax.net.ssl.SSLServerSocket;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.net.ssl.SSLServerSocket;
-
-import net.njay.serverinterconnect.connection.TcpConnection;
-import net.njay.serverinterconnect.packet.Packet;
-
-public class TcpServerManager {
+public class TcpServerManager implements ServerManager{
 
 	protected SSLServerSocket serversocket;
-    protected List<TcpConnection> activeConnections = new ArrayList<TcpConnection>();
+    protected List<Connection> activeConnections;
     protected IncomingConnectionThread connManager;
 	
 	private boolean terminated = false;
@@ -24,6 +24,7 @@ public class TcpServerManager {
      */
 	public TcpServerManager(SSLServerSocket serversocket){
 		this.serversocket = serversocket;
+        this.activeConnections = new ArrayList<Connection>();
 		startConnManager();
 	}
 
@@ -42,7 +43,7 @@ public class TcpServerManager {
      *
      * @param connection newly created connectiom
      */
-	public void submitConnection(TcpConnection connection){
+	public void submitConnection(Connection connection){
 		this.activeConnections.add(connection);
 	}
 
@@ -51,20 +52,20 @@ public class TcpServerManager {
      *
      * @param connection connection to be terminated
      */
-    public void terminateConnection(TcpConnection connection){
+    public void terminateConnection(Connection connection){
         connection.terminate();
         activeConnections.remove(connection);
     }
 
     public void broadcast(Packet p){
-        for (TcpConnection conn : getConnections())
+        for (Connection conn : getConnections())
             conn.sendPacket(p);
     }
 
     /**
      * Begin process to handle new connections
      */
-    protected void startConnManager(){
+    public void startConnManager(){
 		this.connManager = new IncomingConnectionThread(this);
 		this.connManager.start();
 	}
@@ -76,7 +77,7 @@ public class TcpServerManager {
      */
 	public void terminateConnections() {
 		terminated = true;
-		for (TcpConnection connection : activeConnections)
+		for (Connection connection : activeConnections)
 			connection.terminate();
         activeConnections.clear();
 		try{
@@ -93,5 +94,5 @@ public class TcpServerManager {
 	public boolean isTerminated(){ return this.terminated; }
 
     /** @return all active connections */
-	public List<TcpConnection> getConnections(){ return this.activeConnections; }
+	public List<Connection> getConnections(){ return this.activeConnections; }
 }

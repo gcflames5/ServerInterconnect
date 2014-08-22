@@ -1,6 +1,6 @@
 package net.njay.serverinterconnect.api.manager;
 
-import net.njay.serverinterconnect.connection.TcpConnection;
+import net.njay.serverinterconnect.api.connection.Connection;
 
 import java.io.IOException;
 
@@ -16,6 +16,6 @@ public interface ClientManager {
     /**
      * @return current TcpConnection
      */
-    public TcpConnection getConnection();
+    public Connection getConnection();
 
 }

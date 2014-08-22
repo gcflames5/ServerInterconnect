@@ -1,6 +1,6 @@
 package net.njay.serverinterconnect.mesh;
 
-import net.njay.serverinterconnect.connection.TcpConnection;
+import net.njay.serverinterconnect.api.connection.Connection;
 import net.njay.serverinterconnect.mesh.incoming.MeshEntryPacketListener;
 import net.njay.serverinterconnect.single.server.TcpServerManager;
 
@@ -30,7 +30,7 @@ public class MeshServerManager extends TcpServerManager {
 
     @Override
     public void terminateConnections() {
-        for (TcpConnection connection : activeConnections)
+        for (Connection connection : activeConnections)
             connection.terminate();
         activeConnections.clear();
         try{

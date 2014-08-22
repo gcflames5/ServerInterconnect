@@ -1,7 +1,7 @@
 package net.njay.serverinterconnect.api.manager;
 
-import net.njay.serverinterconnect.connection.TcpConnection;
-import net.njay.serverinterconnect.packet.Packet;
+import net.njay.serverinterconnect.api.connection.Connection;
+import net.njay.serverinterconnect.api.packet.Packet;
 
 import javax.net.ssl.SSLServerSocket;
 import java.util.List;
@@ -13,14 +13,14 @@ public interface ServerManager {
      *
      * @param connection newly created connectiom
      */
-    public void submitConnection(TcpConnection connection);
+    public void submitConnection(Connection connection);
 
     /**
      * Terminate a connection and remove it from the activeConnections list
      *
      * @param connection connection to be terminated
      */
-    public void terminateConnection(TcpConnection connection);
+    public void terminateConnection(Connection connection);
 
     /**
      * Send packet to all connections
@@ -48,6 +48,6 @@ public interface ServerManager {
     public boolean isTerminated();
 
     /** @return all active connections */
-    public List<TcpConnection> getConnections();
+    public List<Connection> getConnections();
 
 }

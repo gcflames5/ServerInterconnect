@@ -1,10 +1,11 @@
 package net.njay.serverinterconnect.packet.packets.sample.message;
 
+import net.njay.serverinterconnect.api.packet.Packet;
+import net.njay.serverinterconnect.utils.packet.PacketUtils;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
-import net.njay.serverinterconnect.packet.Packet;
 
 public class MessagePacket extends Packet{
 
@@ -19,13 +20,13 @@ public class MessagePacket extends Packet{
 	public String getMessage(){ return this.message; }
 	
 	@Override
-	public void readPacketContent(DataInputStream input) throws IOException {
-		message = Packet.readString(input);
+	public void readFromStream(DataInputStream input) throws IOException {
+		message = PacketUtils.readString(input);
 	}
 
 	@Override
-	public void writePacketContent(DataOutputStream output) throws IOException {
-		Packet.writeString(message, output);		
+	public void writeToStream(DataOutputStream output) throws IOException {
+		PacketUtils.writeString(message, output);
 	}
 
 }
