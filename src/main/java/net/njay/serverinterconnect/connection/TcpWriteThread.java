@@ -1,9 +1,9 @@
 package net.njay.serverinterconnect.connection;
 
-import java.io.IOException;
-import java.net.SocketTimeoutException;
+import net.njay.serverinterconnect.api.packet.Packet;
+import net.njay.serverinterconnect.utils.packet.PacketUtils;
 
-import net.njay.serverinterconnect.packet.Packet;
+import java.net.SocketTimeoutException;
 
 public class TcpWriteThread extends Thread{
 
@@ -21,7 +21,7 @@ public class TcpWriteThread extends Thread{
 				p = conn.getQueue().take();
 				if (p == null)
 					continue;
-				Packet.writePacket(p, conn.outputStream());
+				PacketUtils.writePacket(p, conn.outputStream());
 			} catch (SocketTimeoutException e){
                 conn.terminate();
                 break;

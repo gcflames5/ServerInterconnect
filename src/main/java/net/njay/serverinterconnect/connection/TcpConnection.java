@@ -1,18 +1,17 @@
 package net.njay.serverinterconnect.connection;
 
+import event.Event;
+import net.njay.serverinterconnect.api.connection.Connection;
+import net.njay.serverinterconnect.api.packet.Packet;
+import net.njay.serverinterconnect.event.connection.ConnectionInitializeEvent;
+import net.njay.serverinterconnect.event.connection.ConnectionTerminateEvent;
+
+import javax.net.ssl.SSLSocket;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
-
-import javax.net.ssl.SSLSocket;
-
-import event.Event;
-import net.njay.serverinterconnect.api.connection.Connection;
-import net.njay.serverinterconnect.event.connection.ConnectionInitializeEvent;
-import net.njay.serverinterconnect.event.connection.ConnectionTerminateEvent;
-import net.njay.serverinterconnect.packet.Packet;
 
 public class TcpConnection extends Connection {
 

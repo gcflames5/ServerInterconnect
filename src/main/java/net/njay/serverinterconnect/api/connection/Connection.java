@@ -1,6 +1,6 @@
 package net.njay.serverinterconnect.api.connection;
 
-import net.njay.serverinterconnect.packet.Packet;
+import net.njay.serverinterconnect.api.packet.Packet;
 
 import javax.net.ssl.SSLSocket;
 import java.io.DataInputStream;

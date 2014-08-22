@@ -1,21 +1,22 @@
 package net.njay.serverinterconnect.single.client;
 
-import java.io.IOException;
-
-import javax.net.ssl.SSLSocket;
-
+import net.njay.serverinterconnect.api.connection.Connection;
+import net.njay.serverinterconnect.api.manager.ClientManager;
 import net.njay.serverinterconnect.connection.TcpConnection;
 import net.njay.serverinterconnect.connection.TcpSocketFactory;
+
+import javax.net.ssl.SSLSocket;
+import java.io.IOException;
 
 /**
  * Handles the connection between a client and an outside source
  *
  * Manages a SSLSocket, TcpConnection, and host details
  */
-public class TcpClientManager {
+public class TcpClientManager implements ClientManager{
 
 	private SSLSocket socket;
-	private TcpConnection activeConnection;
+	private Connection activeConnection;
 	private String address;
 	private int port;
 
@@ -43,6 +44,6 @@ public class TcpClientManager {
     /**
      * @return current TcpConnection
      */
-	public TcpConnection getConnection(){ return this.activeConnection; }
+	public Connection getConnection(){ return this.activeConnection; }
 	
 }

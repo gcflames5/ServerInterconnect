@@ -1,20 +1,20 @@
 package net.njay.serverinterconnect.single.server;
 
-import java.io.IOException;
-import java.net.Socket;
-import java.net.SocketException;
+import net.njay.serverinterconnect.api.manager.ServerManager;
+import net.njay.serverinterconnect.connection.TcpConnection;
 
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLSocket;
-
-import net.njay.serverinterconnect.connection.TcpConnection;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * Takes incoming connections, checks them for SSL viability, and then passes them on to a TcpServerManager
  */
 public class IncomingConnectionThread extends Thread{
 
-	protected TcpServerManager manager;
+	protected ServerManager manager;
     protected SSLServerSocket serversocket;
 
     /**
@@ -22,7 +22,7 @@ public class IncomingConnectionThread extends Thread{
      *
      * @param manager server manager that new connections will be passed on to
      */
-	public IncomingConnectionThread(TcpServerManager manager){
+	public IncomingConnectionThread(ServerManager manager){
 		this.manager = manager;
 		this.serversocket = manager.getServerSocket();
 	}

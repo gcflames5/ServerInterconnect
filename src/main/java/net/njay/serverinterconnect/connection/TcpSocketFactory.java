@@ -1,12 +1,11 @@
 package net.njay.serverinterconnect.connection;
 
-import java.io.IOException;
-import java.net.InetAddress;
-
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
+import java.io.IOException;
+import java.net.InetAddress;
 
 public class TcpSocketFactory {
 
