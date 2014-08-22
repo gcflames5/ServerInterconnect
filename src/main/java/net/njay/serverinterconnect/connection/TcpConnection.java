@@ -9,11 +9,12 @@ import java.util.concurrent.LinkedBlockingDeque;
 import javax.net.ssl.SSLSocket;
 
 import event.Event;
+import net.njay.serverinterconnect.api.connection.Connection;
 import net.njay.serverinterconnect.event.connection.ConnectionInitializeEvent;
 import net.njay.serverinterconnect.event.connection.ConnectionTerminateEvent;
 import net.njay.serverinterconnect.packet.Packet;
 
-public class TcpConnection extends Thread{
+public class TcpConnection extends Connection {
 
 	protected SSLSocket socket;
     protected Thread writeThread;
@@ -81,7 +82,7 @@ public class TcpConnection extends Thread{
     }
 
     /**
-     * Adds a packet to the sending queue, queue is sent if connection is ready
+     * Adds a transferable to the sending queue, queue is sent if connection is ready
      *
      * @param packet
      */

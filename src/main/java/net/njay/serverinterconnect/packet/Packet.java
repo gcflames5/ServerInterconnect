@@ -1,6 +1,7 @@
 package net.njay.serverinterconnect.packet;
 
 import com.google.gson.Gson;
+import net.njay.serverinterconnect.api.transferable.Transferable;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -31,7 +32,7 @@ public abstract class Packet {
 		for (int i = 0; i < registry.size(); i++)
 			if (registry.get(i) == packet.getClass())
 				return i;
-		throw new RuntimeException("Failed to find packet id for: " + packet.getClass() + " (did you forget to register it?)");
+		throw new RuntimeException("Failed to find transferable id for: " + packet.getClass() + " (did you forget to register it?)");
 	}
 
 	public static Packet readPacket(DataInputStream input) throws IOException{
@@ -60,7 +61,7 @@ public abstract class Packet {
 
 	public static Packet getNewPacket(int id) {
 		try{ return registry.get(id).newInstance(); }
-		catch(Exception e){ throw new RuntimeException("Failed to instantiate packet of Packet ID: " + id + "!"); }
+		catch(Exception e){ throw new RuntimeException("Failed to instantiate transferable of Packet ID: " + id + "!"); }
 	}
 
 	/* READING/WRITING UTILS */

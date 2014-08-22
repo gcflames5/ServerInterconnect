@@ -1,4 +1,4 @@
-package net.njay.serverinterconnect.packet;
+package net.njay.serverinterconnect.api.transferable;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
