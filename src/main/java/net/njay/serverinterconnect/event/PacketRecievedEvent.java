@@ -10,20 +10,20 @@ public class PacketRecievedEvent extends Event {
 	private Packet packet;
 
     /**
-     * Called when a packet is recieved (both server and client)
+     * Called when a transferable is recieved (both server and client)
      *
-     * @param conn connection that the packet was received from
-     * @param packet packet that was received
+     * @param conn connection that the transferable was received from
+     * @param packet transferable that was received
      */
 	public PacketRecievedEvent(TcpConnection conn, Packet packet){
         this.conn = conn;
 		this.packet = packet;
 	}
 
-    /** @return connection that the packet was received from */
+    /** @return connection that the transferable was received from */
     public TcpConnection getConnection(){ return this.conn; }
 
-    /** @return packet that was recieved */
+    /** @return transferable that was recieved */
 	public Packet getPacket(){ return this.packet; }
 
 }
