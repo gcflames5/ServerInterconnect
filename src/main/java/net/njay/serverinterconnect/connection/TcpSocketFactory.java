@@ -34,7 +34,7 @@ public class TcpSocketFactory {
      *
      * @param serverAddress hostname to connect to
      * @param port port that the hostname is listening on
-     * @param handshake whether to ssl handshake immediatly (if false this will be performed upon first attempt at sending a packet)
+     * @param handshake whether to ssl handshake immediately (if false this will be performed upon first attempt at sending a packet)
      * @return connected socket
      * @throws IOException failed to connect to host
      */

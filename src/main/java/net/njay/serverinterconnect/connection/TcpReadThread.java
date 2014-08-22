@@ -1,6 +1,7 @@
 package net.njay.serverinterconnect.connection;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 import event.Event;
 import net.njay.serverinterconnect.event.PacketRecievedEvent;
@@ -8,7 +9,7 @@ import net.njay.serverinterconnect.packet.Packet;
 
 public class TcpReadThread extends Thread{
 
-	private TcpConnection conn;
+	protected TcpConnection conn;
 	
 	public TcpReadThread(TcpConnection conn){
 		this.conn = conn;
@@ -20,8 +21,12 @@ public class TcpReadThread extends Thread{
 			try {
 				Packet p = Packet.readPacket(conn.inputStream());
 				Event.callEvent(new PacketRecievedEvent(conn, p));
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (SocketTimeoutException e){
+                conn.terminate();
+                break;
+            } catch (IOException e) {
+				conn.terminate();
+                break;
 			}
 		}
 	}

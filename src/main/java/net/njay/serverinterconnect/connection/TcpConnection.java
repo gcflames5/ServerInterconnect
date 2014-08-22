@@ -8,16 +8,19 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 import javax.net.ssl.SSLSocket;
 
+import event.Event;
+import net.njay.serverinterconnect.event.connection.ConnectionInitializeEvent;
+import net.njay.serverinterconnect.event.connection.ConnectionTerminateEvent;
 import net.njay.serverinterconnect.packet.Packet;
 
 public class TcpConnection extends Thread{
 
-	private SSLSocket socket;
-	private Thread writeThread;
-	private Thread readThread;
-	private DataInputStream in;
-	private DataOutputStream out;
-	private BlockingQueue<Packet> sendQueue;
+	protected SSLSocket socket;
+    protected Thread writeThread;
+    protected Thread readThread;
+    protected DataInputStream in;
+    protected DataOutputStream out;
+    protected BlockingQueue<Packet> sendQueue;
 	
 	private boolean terminated = false;
 
@@ -35,7 +38,27 @@ public class TcpConnection extends Thread{
 		this.out = new DataOutputStream(socket.getOutputStream());
 		this.sendQueue = new LinkedBlockingDeque<Packet>();
 		startThreads();
-	}
+
+        Event.callEvent(new ConnectionInitializeEvent(this));
+    }
+
+    /**
+     * Create a TcpConnection with default read and write threads
+     *
+     * @param socket connected socket
+     * @throws IOException
+     */
+    public TcpConnection(SSLSocket socket, boolean start) throws IOException{
+        this.socket = socket;
+        this.writeThread = new TcpWriteThread(this);
+        this.readThread = new TcpReadThread(this);
+        this.in = new DataInputStream(socket.getInputStream());
+        this.out = new DataOutputStream(socket.getOutputStream());
+        this.sendQueue = new LinkedBlockingDeque<Packet>();
+        if (start) startThreads();
+
+        Event.callEvent(new ConnectionInitializeEvent(this));
+    }
 
     /**
      * Create a TcpConnection with custom read and write threads
@@ -53,6 +76,8 @@ public class TcpConnection extends Thread{
         this.out = new DataOutputStream(socket.getOutputStream());
         this.sendQueue = new LinkedBlockingDeque<Packet>();
         startThreads();
+
+        Event.callEvent(new ConnectionInitializeEvent(this));
     }
 
     /**
@@ -76,7 +101,8 @@ public class TcpConnection extends Thread{
      * Safely terminate read and write threads, close socket
      */
 	public void terminate(){
-		try {
+        Event.callEvent(new ConnectionTerminateEvent(this));
+        try {
 			writeThread = null;
 			readThread = null;
 			terminated = true;

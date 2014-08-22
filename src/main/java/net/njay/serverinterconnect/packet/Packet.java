@@ -7,24 +7,33 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class Packet {
 
     public static final int MAX_STRING_SIZE = 32767;
 
-	public static ArrayList<Class<? extends Packet>> registry = new ArrayList<Class<? extends Packet>>();
+	private static ArrayList<Class<? extends Packet>> registry = new ArrayList<Class<? extends Packet>>();
 	
 	public static void registerPacket(Class<? extends Packet> clazz){
 		registry.add(clazz);
 	}
-	
-	public static final int getPacketID(Packet packet){ 
+
+    private UUID packetUuid;
+
+    public Packet(){
+        packetUuid = UUID.randomUUID();
+    }
+
+    public UUID getPacketUUID(){ return packetUuid; }
+
+	public static final int getPacketID(Packet packet){
 		for (int i = 0; i < registry.size(); i++)
 			if (registry.get(i) == packet.getClass())
 				return i;
 		throw new RuntimeException("Failed to find packet id for: " + packet.getClass() + " (did you forget to register it?)");
 	}
-	
+
 	public static Packet readPacket(DataInputStream input) throws IOException{
 		int packetID = input.readInt();
 		if (packetID >= registry.size())
@@ -38,22 +47,22 @@ public abstract class Packet {
             return packet;
         }
 	}
-	
+
 	public static void writePacket(Packet packet, DataOutputStream output) throws IOException{
 		output.writeInt(getPacketID(packet));
 		packet.writePacketContent(output);
 	}
-	
+
 	public static void safeWritePacket(Packet packet, DataOutputStream output){
 		try{ writePacket(packet, output); }
 		catch(Exception e) { e.printStackTrace(); }
 	}
-	
+
 	public static Packet getNewPacket(int id) {
 		try{ return registry.get(id).newInstance(); }
 		catch(Exception e){ throw new RuntimeException("Failed to instantiate packet of Packet ID: " + id + "!"); }
 	}
-	
+
 	/* READING/WRITING UTILS */
 	public static void writeString(String string, DataOutputStream output) throws IOException{
         if (string.length() > MAX_STRING_SIZE)
@@ -75,12 +84,12 @@ public abstract class Packet {
             return string.toString();
         }
     }
-    
+
     public static void writeByteArray(DataOutputStream output, byte... bytes) throws IOException{
     	output.writeShort(bytes.length);
     	output.write(bytes);
     }
-    
+
     public static byte[] readBytes(DataInputStream input) throws IOException{
 		short bytesToRead = input.readShort();
 		if (bytesToRead <= 0)
@@ -89,13 +98,13 @@ public abstract class Packet {
 		input.read(buffer);
 		return buffer;
 	}
-    
+
     public static void writeList(List<? extends Transferable> list, DataOutputStream output) throws IOException{
     	output.writeShort(list.size());
     	for (Transferable object : list)
     		object.writeToStream(output);
     }
-    
+
     public static List<Transferable> readList(Class<? extends Transferable> clazz, DataInputStream input) throws IOException{
     	short size = input.readShort();
     	List<Transferable> returnList = new ArrayList<Transferable>();
@@ -108,7 +117,7 @@ public abstract class Packet {
     	}
     	return returnList;
     }
-    
+
     public static <T> List<T> convertList(List<? extends Transferable> list){
     	List<T> returnList = new ArrayList<T>();
     	for (Transferable transferable : list)

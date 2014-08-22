@@ -1,4 +1,4 @@
-package net.njay.serverinterconnect.client;
+package net.njay.serverinterconnect.single.client;
 
 import java.io.IOException;
 
