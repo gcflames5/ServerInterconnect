@@ -1,12 +1,9 @@
 package net.njay.serverinterconnect.mesh;
 
+import net.njay.serverinterconnect.api.manager.ServerManager;
+import net.njay.serverinterconnect.api.packet.Packet;
 import net.njay.serverinterconnect.connection.TcpConnection;
-import net.njay.serverinterconnect.connection.TcpReadThread;
 import net.njay.serverinterconnect.connection.TcpSocketFactory;
-import net.njay.serverinterconnect.connection.TcpWriteThread;
-import net.njay.serverinterconnect.mesh.incoming.MeshEntryPacketListener;
-import net.njay.serverinterconnect.packet.Packet;
-import net.njay.serverinterconnect.single.server.TcpServerManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +14,7 @@ import java.util.UUID;
 public class Mesh {
 
     private List<UUID> recentPacketIds;
-    private TcpServerManager serverManager;
+    private ServerManager serverManager;
 
     private String[] ipsToConnect;
     private int port;
@@ -61,7 +58,7 @@ public class Mesh {
         }
     }
 
-    public TcpServerManager getManager(){
+    public ServerManager getManager(){
         return this.serverManager;
     }
 

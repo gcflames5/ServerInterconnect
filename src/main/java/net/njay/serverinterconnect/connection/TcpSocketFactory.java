@@ -1,12 +1,11 @@
 package net.njay.serverinterconnect.connection;
 
-import java.io.IOException;
-import java.net.InetAddress;
-
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
+import java.io.IOException;
+import java.net.InetAddress;
 
 public class TcpSocketFactory {
 
@@ -34,7 +33,7 @@ public class TcpSocketFactory {
      *
      * @param serverAddress hostname to connect to
      * @param port port that the hostname is listening on
-     * @param handshake whether to ssl handshake immediately (if false this will be performed upon first attempt at sending a packet)
+     * @param handshake whether to ssl handshake immediately (if false this will be performed upon first attempt at sending a transferable)
      * @return connected socket
      * @throws IOException failed to connect to host
      */
