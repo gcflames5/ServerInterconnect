@@ -26,7 +26,7 @@ public class IncomingConnectionThread extends Thread{
 		this.manager = manager;
 		this.serversocket = manager.getServerSocket();
 	}
-	
+
 	@Override
 	public void run(){
 		while (!manager.isTerminated()) {

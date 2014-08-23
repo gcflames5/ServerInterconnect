@@ -4,6 +4,11 @@ import net.njay.serverinterconnect.api.manager.ServerManager;
 import net.njay.serverinterconnect.api.packet.Packet;
 import net.njay.serverinterconnect.connection.TcpConnection;
 import net.njay.serverinterconnect.connection.TcpSocketFactory;
+import net.njay.serverinterconnect.packet.JsonPacket;
+import net.njay.serverinterconnect.packet.packets.sample.message.JsonMessagePacket;
+import net.njay.serverinterconnect.packet.packets.sample.message.MessagePacket;
+import net.njay.serverinterconnect.packet.reponse.AutoResponder;
+import net.njay.serverinterconnect.packet.reponse.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;

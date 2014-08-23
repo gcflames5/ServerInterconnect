@@ -21,7 +21,7 @@ public class TcpConnection extends Connection {
     protected DataInputStream in;
     protected DataOutputStream out;
     protected BlockingQueue<Packet> sendQueue;
-	
+
 	private boolean terminated = false;
 
     /**
@@ -146,5 +146,5 @@ public class TcpConnection extends Connection {
      * @return current socket
      */
 	public SSLSocket getSocket(){ return this.socket; }
-	
+
 }
