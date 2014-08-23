@@ -24,9 +24,11 @@ public class TcpWriteThread extends Thread{
 				PacketUtils.writePacket(p, conn.outputStream());
 			} catch (SocketTimeoutException e){
                 conn.terminate();
+                e.printStackTrace();
                 break;
             } catch (Exception e) {
 				conn.terminate();
+                e.printStackTrace();
                 break;
 			}
 		}
