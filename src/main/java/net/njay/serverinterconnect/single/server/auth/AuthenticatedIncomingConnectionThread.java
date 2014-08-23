@@ -1,6 +1,7 @@
 package net.njay.serverinterconnect.single.server.auth;
 
 import net.njay.serverinterconnect.connection.TcpConnection;
+import net.njay.serverinterconnect.connection.TcpWriteThread;
 import net.njay.serverinterconnect.single.server.IncomingConnectionThread;
 
 import javax.net.ssl.SSLSocket;
@@ -25,7 +26,8 @@ public class AuthenticatedIncomingConnectionThread extends IncomingConnectionThr
             Socket incomingConn = serversocket.accept();
             if (!(incomingConn instanceof SSLSocket))
                 throw new RuntimeException("Non-SSL Connection detected! Rejecting " + incomingConn.getInetAddress());
-            TcpConnection tcpConn = new TcpConnection((SSLSocket)incomingConn);
+            TcpConnection tcpConn = new TcpConnection((SSLSocket)incomingConn, false);
+            tcpConn.startThreads(new TcpWriteThread(tcpConn), new AuthenticatedTcpReadThread((AuthenticatedTcpServerManager)manager, tcpConn));
             ((AuthenticatedTcpServerManager)manager).submitUnauthenticatedConnection(tcpConn);
         } catch(SocketException e){
             System.err.println("Socket closed... terminating listening thread.");

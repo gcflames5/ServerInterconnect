@@ -97,6 +97,12 @@ public class TcpConnection extends Connection {
 			readThread.start();
 	}
 
+    public void startThreads(Thread writeThread, Thread readThread){
+        this.writeThread = writeThread;
+        this.readThread = readThread;
+        startThreads();
+    }
+
     /**
      * Safely terminate read and write threads, close socket
      */

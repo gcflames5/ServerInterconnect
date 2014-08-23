@@ -47,7 +47,7 @@ public class AuthenticatedTcpServerManager extends TcpServerManager {
         });
 
         //Waits for the client to return with an AuthenticationPacket and when it does,
-        //check the valilidity of its credentials and admit it to the server
+        //check the validity of its credentials and admit it to the server
         ResponseUtil.getDefaultResponder().respondTo(authPacketClass, new Response() {
             @Override
             public void run() {
@@ -56,7 +56,6 @@ public class AuthenticatedTcpServerManager extends TcpServerManager {
                 if (authenticator.authenticate(authenticationPacket)) {
                     submitConnection(event.getConnection());
                     unAuthenticatedConnections.remove(event.getConnection());
-                    System.out.println("Connection authenticated!");
                 }
             }
         });
@@ -66,6 +65,10 @@ public class AuthenticatedTcpServerManager extends TcpServerManager {
     public void startConnManager(){
         connManager = new AuthenticatedIncomingConnectionThread(this);
         connManager.start();
+    }
+
+    public boolean isAuthenticated(TcpConnection conn){
+        return activeConnections.contains(conn);
     }
 
 }
