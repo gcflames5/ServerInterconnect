@@ -21,14 +21,14 @@ public class MeshEntryPacketListener extends IncomingConnectionThread {
     }
 
     @Override
-    public boolean waitForConnection(){
+    public boolean waitForConnection() {
         try {
             Socket incomingConn = serversocket.accept();
             if (!(incomingConn instanceof SSLSocket))
                 throw new RuntimeException("Non-SSL Connection detected! Rejecting " + incomingConn.getInetAddress());
-            TcpConnection tcpConn = new MeshConnection(mesh, (SSLSocket)incomingConn);
+            TcpConnection tcpConn = new MeshConnection(mesh, (SSLSocket) incomingConn);
             manager.submitConnection(tcpConn);
-        } catch(SocketException e){
+        } catch (SocketException e) {
             System.err.println("Socket closed... terminating listening thread.");
             return false;
         } catch (IOException e) {
@@ -38,7 +38,7 @@ public class MeshEntryPacketListener extends IncomingConnectionThread {
         return true;
     }
 
-    public void terminate(){
+    public void terminate() {
         manager.terminateConnections();
     }
 

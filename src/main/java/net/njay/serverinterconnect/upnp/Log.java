@@ -2,11 +2,11 @@ package net.njay.serverinterconnect.upnp;
 
 public class Log {
 
-	private static boolean debug = false;
+    private static boolean debug = false;
 
-	public static void debug(String msg){
-		if (debug) System.out.println("[DEBUG] " + msg);
-	}
+    public static void debug(String msg) {
+        if (debug) System.out.println("[DEBUG] " + msg);
+    }
 
 
 }

@@ -6,12 +6,15 @@ public class AccessRequestPacket extends JsonPacket {
 
     private String secret;
 
-    public AccessRequestPacket() {}
+    public AccessRequestPacket() {
+    }
 
-    public AccessRequestPacket(String secret){
+    public AccessRequestPacket(String secret) {
         this.secret = secret;
     }
 
-    public String getSecret(){ return this.secret; }
+    public String getSecret() {
+        return this.secret;
+    }
 
 }

@@ -41,13 +41,19 @@ public interface ServerManager {
      */
     public void terminateConnections();
 
-    /** @return active socket */
+    /**
+     * @return active socket
+     */
     public SSLServerSocket getServerSocket();
 
-    /** @return whether or not server manager is still running */
+    /**
+     * @return whether or not server manager is still running
+     */
     public boolean isTerminated();
 
-    /** @return all active connections */
+    /**
+     * @return all active connections
+     */
     public List<Connection> getConnections();
 
 }

@@ -25,20 +25,19 @@ public class AuthenticatedTcpReadThread extends TcpReadThread {
     }
 
     @Override
-    public void run(){
-        while (!conn.isTerminated()){
+    public void run() {
+        while (!conn.isTerminated()) {
             try {
                 Packet p = PacketUtils.readPacket(conn.inputStream());
                 if (manager.isAuthenticated(conn))
                     Event.callEvent(new PacketRecievedEvent(conn, p));
-                else{
-                    System.out.println("PACKET: " + p.getClass() + " " + p + " " + (p instanceof AuthenticationPacket));
+                else {
                     if (p instanceof AccessRequestPacket || p instanceof AuthenticationPacket || p instanceof AuthenticationRequestPacket)
                         Event.callEvent(new PacketRecievedEvent(conn, p));
                     else
                         conn.sendPacket(new RejectionPacket(p, RejectionReason.CONNECTION_NOT_AUTHORIZED).setResponse(p));
                 }
-            } catch (SocketTimeoutException e){
+            } catch (SocketTimeoutException e) {
                 conn.terminate();
                 e.printStackTrace();
                 break;

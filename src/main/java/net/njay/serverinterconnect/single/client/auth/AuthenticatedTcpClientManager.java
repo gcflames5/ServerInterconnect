@@ -29,7 +29,7 @@ public class AuthenticatedTcpClientManager extends TcpClientManager {
         sendAccessPacket(authenticationPacket);
     }
 
-    private void sendAccessPacket(final AuthenticationPacket authenticationPacket){
+    private void sendAccessPacket(final AuthenticationPacket authenticationPacket) {
         AccessRequestPacket packet = new AccessRequestPacket(UUID.randomUUID().toString() + UUID.randomUUID().toString());
         getConnection().sendPacket(packet);
         System.out.println("Sent auth packet!");

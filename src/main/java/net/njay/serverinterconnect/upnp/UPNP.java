@@ -9,8 +9,8 @@ import java.net.UnknownHostException;
 
 public class UPNP {
 
-	public static int forward(int start, int end) throws SocketException, UnknownHostException, IOException, SAXException, ParserConfigurationException {
-		UPNPConnector connector = new UPNPConnector(start, end);
-		return connector.forward();
-	}
+    public static int forward(int start, int end) throws SocketException, UnknownHostException, IOException, SAXException, ParserConfigurationException {
+        UPNPConnector connector = new UPNPConnector(start, end);
+        return connector.forward();
+    }
 }

@@ -8,29 +8,29 @@ import net.njay.serverinterconnect.utils.packet.PacketUtils;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 
-public class TcpReadThread extends Thread{
+public class TcpReadThread extends Thread {
 
-	protected TcpConnection conn;
+    protected TcpConnection conn;
 
-	public TcpReadThread(TcpConnection conn){
-		this.conn = conn;
-	}
+    public TcpReadThread(TcpConnection conn) {
+        this.conn = conn;
+    }
 
-	@Override
-	public void run(){
-		while (!conn.isTerminated()){
-			try {
-				Packet p = PacketUtils.readPacket(conn.inputStream());
-				Event.callEvent(new PacketRecievedEvent(conn, p));
-			} catch (SocketTimeoutException e){
+    @Override
+    public void run() {
+        while (!conn.isTerminated()) {
+            try {
+                Packet p = PacketUtils.readPacket(conn.inputStream());
+                Event.callEvent(new PacketRecievedEvent(conn, p));
+            } catch (SocketTimeoutException e) {
                 conn.terminate();
                 e.printStackTrace();
                 break;
             } catch (IOException e) {
-				conn.terminate();
+                conn.terminate();
                 e.printStackTrace();
                 break;
-			}
-		}
-	}
+            }
+        }
+    }
 }

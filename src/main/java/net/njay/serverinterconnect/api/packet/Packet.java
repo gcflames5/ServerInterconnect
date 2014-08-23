@@ -11,29 +11,31 @@ public abstract class Packet implements Transferable {
     private UUID packetUuid;
     private UUID responseTo;
 
-    public Packet(){
+    public Packet() {
         this.responseTo = null;
         this.packetUuid = UUID.randomUUID();
     }
 
-    public UUID getPacketUUID(){ return packetUuid; }
+    public UUID getPacketUUID() {
+        return packetUuid;
+    }
 
-    public Packet setResponse(UUID responseToUUID){
+    public Packet setResponse(UUID responseToUUID) {
         this.responseTo = responseToUUID;
         return this;
     }
 
-    public Packet setResponse(Packet responseTo){
-        this.responseTo = responseTo.getPacketUUID();
-        return this;
-    }
-
-    public UUID getResponseTo(){
+    public UUID getResponseTo() {
         return responseTo;
     }
 
-    public boolean isResponse(){
+    public boolean isResponse() {
         return responseTo != null;
+    }
+
+    public Packet setResponse(Packet responseTo) {
+        this.responseTo = responseTo.getPacketUUID();
+        return this;
     }
 
 }

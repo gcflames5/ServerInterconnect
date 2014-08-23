@@ -15,7 +15,7 @@ public interface Transferable {
      * @param output stream to write to
      * @throws IOException
      */
-	public void writeToStream(DataOutputStream output) throws IOException;
+    public void writeToStream(DataOutputStream output) throws IOException;
 
     /**
      * Reads all class members from a DataInputStream (must maintain same order as writeToStream(...)
@@ -23,6 +23,6 @@ public interface Transferable {
      * @param input stream to read from
      * @throws IOException
      */
-	public void readFromStream(DataInputStream input)throws IOException;
+    public void readFromStream(DataInputStream input) throws IOException;
 
 }
