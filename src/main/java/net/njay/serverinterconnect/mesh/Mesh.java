@@ -4,8 +4,6 @@ import net.njay.serverinterconnect.api.manager.ServerManager;
 import net.njay.serverinterconnect.api.packet.Packet;
 import net.njay.serverinterconnect.connection.TcpConnection;
 import net.njay.serverinterconnect.connection.TcpSocketFactory;
-import net.njay.serverinterconnect.packet.message.JsonMessagePacket;
-import net.njay.serverinterconnect.packet.message.MessagePacket;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,33 +19,33 @@ public class Mesh {
     private String[] ipsToConnect;
     private int port;
 
-    public Mesh(String password, int listenPort, String... ipsToConnect){
+    public Mesh(String password, int listenPort, String... ipsToConnect) {
         recentPacketIds = Collections.synchronizedList(new ArrayList<UUID>());
         this.ipsToConnect = ipsToConnect;
         this.port = listenPort;
     }
 
-    public void initialize(){
+    public void initialize() {
         serverManager = new MeshServerManager(TcpSocketFactory.generateServerSocket(port), this);
         createConnections();
     }
 
-    public void addRecentPacket(Packet packet){
+    public void addRecentPacket(Packet packet) {
         recentPacketIds.add(packet.getPacketUUID());
         if (recentPacketIds.size() > 50)
             recentPacketIds.remove(50);
     }
 
-    public boolean recieved(Packet packet){
+    public boolean recieved(Packet packet) {
         return recentPacketIds.contains(packet.getPacketUUID());
     }
 
-    public void terminate(){
+    public void terminate() {
         serverManager.terminateConnections();
     }
 
-    protected void createConnections(){
-        for (String ip : ipsToConnect){
+    protected void createConnections() {
+        for (String ip : ipsToConnect) {
             int port;
             if (ip.contains(":"))
                 port = Integer.valueOf(ip.split(":")[1]);
@@ -56,11 +54,14 @@ public class Mesh {
             try {
                 TcpConnection tcpConnection = new MeshConnection(this, TcpSocketFactory.generateSocket(ip.split(":")[0], port, false));
                 serverManager.submitConnection(tcpConnection);
-            } catch (IOException e) { e.printStackTrace(); continue; }
+            } catch (IOException e) {
+                e.printStackTrace();
+                continue;
+            }
         }
     }
 
-    public ServerManager getManager(){
+    public ServerManager getManager() {
         return this.serverManager;
     }
 

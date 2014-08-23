@@ -23,7 +23,7 @@ public class MeshServerManager extends TcpServerManager {
     }
 
     @Override
-    public void startConnManager(){
+    public void startConnManager() {
         this.connManager = new MeshEntryPacketListener(this, mesh);
         this.connManager.start();
     }
@@ -33,9 +33,9 @@ public class MeshServerManager extends TcpServerManager {
         for (Connection connection : activeConnections)
             connection.terminate();
         activeConnections.clear();
-        try{
+        try {
             serversocket.close();
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

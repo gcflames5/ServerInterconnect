@@ -7,7 +7,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.Queue;
 
-public abstract class Connection extends Thread{
+public abstract class Connection extends Thread {
 
     /**
      * Adds a transferable to the sending queue, queue is sent if connection is ready

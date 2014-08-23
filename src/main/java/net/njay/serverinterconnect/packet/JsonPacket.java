@@ -11,7 +11,8 @@ import java.io.IOException;
 public abstract class JsonPacket extends Packet {
 
     @Override
-    public void readFromStream(DataInputStream input) throws IOException {}
+    public void readFromStream(DataInputStream input) throws IOException {
+    }
 
     @Override
     public void writeToStream(DataOutputStream output) throws IOException {

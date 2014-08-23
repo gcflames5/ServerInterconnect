@@ -26,15 +26,15 @@ public class AuthenticatedTcpServerManager extends TcpServerManager {
         registerPacketResponses(authPacketClass);
     }
 
-    public Authenticator getAuthenticator(){
+    public Authenticator getAuthenticator() {
         return this.authenticator;
     }
 
-    public void submitUnauthenticatedConnection(TcpConnection connection){
+    public void submitUnauthenticatedConnection(TcpConnection connection) {
         this.unAuthenticatedConnections.add(connection);
     }
 
-    private void registerPacketResponses(Class<? extends AuthenticationPacket> authPacketClass){
+    private void registerPacketResponses(Class<? extends AuthenticationPacket> authPacketClass) {
         //Waits for the client to send a AccessRequestPacket, and when it does, send an
         //AuthenticationRequestPacket with the same secret as the AccessRequestPacket
         ResponseUtil.getDefaultResponder().respondTo(AccessRequestPacket.class, new Response() {
@@ -62,12 +62,12 @@ public class AuthenticatedTcpServerManager extends TcpServerManager {
     }
 
     @Override
-    public void startConnManager(){
+    public void startConnManager() {
         connManager = new AuthenticatedIncomingConnectionThread(this);
         connManager.start();
     }
 
-    public boolean isAuthenticated(TcpConnection conn){
+    public boolean isAuthenticated(TcpConnection conn) {
         return activeConnections.contains(conn);
     }
 

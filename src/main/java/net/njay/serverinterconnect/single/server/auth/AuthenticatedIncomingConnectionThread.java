@@ -21,15 +21,15 @@ public class AuthenticatedIncomingConnectionThread extends IncomingConnectionThr
     }
 
     @Override
-    public boolean waitForConnection(){
+    public boolean waitForConnection() {
         try {
             Socket incomingConn = serversocket.accept();
             if (!(incomingConn instanceof SSLSocket))
                 throw new RuntimeException("Non-SSL Connection detected! Rejecting " + incomingConn.getInetAddress());
-            TcpConnection tcpConn = new TcpConnection((SSLSocket)incomingConn, false);
-            tcpConn.startThreads(new TcpWriteThread(tcpConn), new AuthenticatedTcpReadThread((AuthenticatedTcpServerManager)manager, tcpConn));
-            ((AuthenticatedTcpServerManager)manager).submitUnauthenticatedConnection(tcpConn);
-        } catch(SocketException e){
+            TcpConnection tcpConn = new TcpConnection((SSLSocket) incomingConn, false);
+            tcpConn.startThreads(new TcpWriteThread(tcpConn), new AuthenticatedTcpReadThread((AuthenticatedTcpServerManager) manager, tcpConn));
+            ((AuthenticatedTcpServerManager) manager).submitUnauthenticatedConnection(tcpConn);
+        } catch (SocketException e) {
             System.err.println("Socket closed... terminating listening thread.");
             return false;
         } catch (IOException e) {

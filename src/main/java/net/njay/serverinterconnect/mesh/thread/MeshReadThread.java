@@ -21,15 +21,15 @@ public class MeshReadThread extends TcpReadThread {
     }
 
     @Override
-    public void run(){
-        while (!conn.isTerminated()){
+    public void run() {
+        while (!conn.isTerminated()) {
             try {
                 Packet p = PacketUtils.readPacket(conn.inputStream());
                 if (!mesh.recieved(p)) {
                     mesh.addRecentPacket(p);
                     Event.callEvent(new PacketRecievedEvent(conn, p));
                 }
-            } catch (SocketTimeoutException e){
+            } catch (SocketTimeoutException e) {
                 conn.terminate();
                 break;
             } catch (IOException e) {

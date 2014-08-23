@@ -7,26 +7,29 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class MessagePacket extends Packet{
+public class MessagePacket extends Packet {
 
-	private String message;
+    private String message;
 
-	public MessagePacket(){}
+    public MessagePacket() {
+    }
 
-	public MessagePacket(String message){
-		this.message = message;
-	}
+    public MessagePacket(String message) {
+        this.message = message;
+    }
 
-	public String getMessage(){ return this.message; }
+    public String getMessage() {
+        return this.message;
+    }
 
-	@Override
-	public void readFromStream(DataInputStream input) throws IOException {
-		message = PacketUtils.readString(input);
-	}
+    @Override
+    public void readFromStream(DataInputStream input) throws IOException {
+        message = PacketUtils.readString(input);
+    }
 
-	@Override
-	public void writeToStream(DataOutputStream output) throws IOException {
-		PacketUtils.writeString(message, output);
-	}
+    @Override
+    public void writeToStream(DataOutputStream output) throws IOException {
+        PacketUtils.writeString(message, output);
+    }
 
 }
