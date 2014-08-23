@@ -15,10 +15,10 @@ import java.io.IOException;
  */
 public class TcpClientManager implements ClientManager{
 
-	private SSLSocket socket;
-	private Connection activeConnection;
-	private String address;
-	private int port;
+	protected SSLSocket socket;
+    protected Connection activeConnection;
+    protected String address;
+	protected int port;
 
     /**
      * Constructor.

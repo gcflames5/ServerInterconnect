@@ -24,9 +24,11 @@ public class TcpReadThread extends Thread{
 				Event.callEvent(new PacketRecievedEvent(conn, p));
 			} catch (SocketTimeoutException e){
                 conn.terminate();
+                e.printStackTrace();
                 break;
             } catch (IOException e) {
 				conn.terminate();
+                e.printStackTrace();
                 break;
 			}
 		}

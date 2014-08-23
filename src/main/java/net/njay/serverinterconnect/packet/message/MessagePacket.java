@@ -1,4 +1,4 @@
-package net.njay.serverinterconnect.packet.packets.sample.message;
+package net.njay.serverinterconnect.packet.message;
 
 import net.njay.serverinterconnect.api.packet.Packet;
 import net.njay.serverinterconnect.utils.packet.PacketUtils;

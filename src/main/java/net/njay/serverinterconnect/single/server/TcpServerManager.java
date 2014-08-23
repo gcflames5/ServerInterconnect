@@ -6,6 +6,7 @@ import net.njay.serverinterconnect.api.packet.Packet;
 
 import javax.net.ssl.SSLServerSocket;
 import java.io.IOException;
+import java.net.Authenticator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,19 +23,10 @@ public class TcpServerManager implements ServerManager{
      *
      * @param serversocket socket to manage
      */
-	public TcpServerManager(SSLServerSocket serversocket){
-		this.serversocket = serversocket;
-        this.activeConnections = new ArrayList<Connection>();
-		startConnManager();
-	}
-
-    /**
-     * Constructor.
-     *
-     * @param serversocket socket to manage
-     */
     public TcpServerManager(SSLServerSocket serversocket, boolean start){
         this.serversocket = serversocket;
+        this.activeConnections = new ArrayList<Connection>();
+
         if (start) startConnManager();
     }
 
