@@ -11,7 +11,7 @@ public class JsonMessagePacket extends JsonPacket {
 	public JsonMessagePacket(String message){
 		this.message = message;
 	}
-	
+
 	public String getMessage(){ return this.message; }
 
 }

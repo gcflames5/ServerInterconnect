@@ -11,11 +11,11 @@ import java.net.SocketTimeoutException;
 public class TcpReadThread extends Thread{
 
 	protected TcpConnection conn;
-	
+
 	public TcpReadThread(TcpConnection conn){
 		this.conn = conn;
 	}
-	
+
 	@Override
 	public void run(){
 		while (!conn.isTerminated()){

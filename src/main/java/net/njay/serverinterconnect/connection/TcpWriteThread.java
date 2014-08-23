@@ -8,11 +8,11 @@ import java.net.SocketTimeoutException;
 public class TcpWriteThread extends Thread{
 
 	private TcpConnection conn;
-	
+
 	public TcpWriteThread(TcpConnection conn){
 		this.conn = conn;
 	}
-	
+
 	@Override
 	public void run(){
 		while (!conn.isTerminated()){

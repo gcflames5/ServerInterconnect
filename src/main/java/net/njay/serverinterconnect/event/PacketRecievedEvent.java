@@ -10,7 +10,7 @@ public class PacketRecievedEvent extends Event {
 	private Packet packet;
 
     /**
-     * Called when a transferable is recieved (both server and client)
+     * Called when a transferable is relieved (both server and client)
      *
      * @param conn connection that the transferable was received from
      * @param packet transferable that was received

@@ -45,5 +45,5 @@ public class TcpClientManager implements ClientManager{
      * @return current TcpConnection
      */
 	public Connection getConnection(){ return this.activeConnection; }
-	
+
 }

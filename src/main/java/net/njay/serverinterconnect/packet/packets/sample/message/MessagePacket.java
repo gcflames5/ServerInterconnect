@@ -10,15 +10,15 @@ import java.io.IOException;
 public class MessagePacket extends Packet{
 
 	private String message;
-	
+
 	public MessagePacket(){}
-	
+
 	public MessagePacket(String message){
 		this.message = message;
 	}
-	
+
 	public String getMessage(){ return this.message; }
-	
+
 	@Override
 	public void readFromStream(DataInputStream input) throws IOException {
 		message = PacketUtils.readString(input);

@@ -14,7 +14,7 @@ public class TcpServerManager implements ServerManager{
 	protected SSLServerSocket serversocket;
     protected List<Connection> activeConnections;
     protected IncomingConnectionThread connManager;
-	
+
 	private boolean terminated = false;
 
     /**
