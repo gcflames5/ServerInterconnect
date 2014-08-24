@@ -7,19 +7,12 @@ import java.util.UUID;
 
 public class RejectionPacket extends JsonPacket {
 
-    private UUID rejectedPacket;
     private RejectionReason rejectionReason;
 
-    public RejectionPacket() {
-    }
+    public RejectionPacket() { }
 
-    public RejectionPacket(Packet rejectedPacket, RejectionReason rejectionReason) {
-        this.rejectedPacket = rejectedPacket.getPacketUUID();
+    public RejectionPacket(RejectionReason rejectionReason) {
         this.rejectionReason = rejectionReason;
-    }
-
-    public UUID getRejectedPacket() {
-        return this.rejectedPacket;
     }
 
     public RejectionReason getReason() {

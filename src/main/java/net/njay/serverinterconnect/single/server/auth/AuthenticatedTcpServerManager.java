@@ -1,11 +1,17 @@
 package net.njay.serverinterconnect.single.server.auth;
 
+import event.Event;
 import net.njay.serverinterconnect.api.auth.Authenticator;
 import net.njay.serverinterconnect.api.packet.AuthenticationPacket;
 import net.njay.serverinterconnect.connection.TcpConnection;
+import net.njay.serverinterconnect.event.connection.auth.AuthenticationFailureEvent;
+import net.njay.serverinterconnect.event.connection.auth.AuthenticationSuccessEvent;
 import net.njay.serverinterconnect.packet.auth.AccessRequestPacket;
 import net.njay.serverinterconnect.packet.auth.AuthenticationRequestPacket;
+import net.njay.serverinterconnect.packet.reject.RejectionPacket;
+import net.njay.serverinterconnect.packet.reject.RejectionReason;
 import net.njay.serverinterconnect.packet.reponse.Response;
+import net.njay.serverinterconnect.packet.success.SuccessPacket;
 import net.njay.serverinterconnect.single.server.TcpServerManager;
 import net.njay.serverinterconnect.utils.response.ResponseUtil;
 
@@ -56,6 +62,11 @@ public class AuthenticatedTcpServerManager extends TcpServerManager {
                 if (authenticator.authenticate(authenticationPacket)) {
                     submitConnection(event.getConnection());
                     unAuthenticatedConnections.remove(event.getConnection());
+                    event.getConnection().sendPacket(new SuccessPacket().setResponse(packet));
+                    Event.callEvent(new AuthenticationSuccessEvent(event.getConnection()));
+                }else{
+                    event.getConnection().sendPacket(new RejectionPacket(RejectionReason.INVALID_CREDENTIALS).setResponse(packet));
+                    Event.callEvent(new AuthenticationFailureEvent(event.getConnection()));
                 }
             }
         });
