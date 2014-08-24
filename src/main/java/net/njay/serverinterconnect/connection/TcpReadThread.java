@@ -21,7 +21,7 @@ public class TcpReadThread extends Thread {
         while (!conn.isTerminated()) {
             try {
                 Packet p = PacketUtils.readPacket(conn.inputStream());
-                Event.callEvent(new PacketRecievedEvent(conn, p));
+                handlePacket(p);
             } catch (SocketTimeoutException e) {
                 conn.terminate();
                 e.printStackTrace();
@@ -32,5 +32,9 @@ public class TcpReadThread extends Thread {
                 break;
             }
         }
+    }
+
+    public void handlePacket(Packet packet){
+        Event.callEvent(new PacketRecievedEvent(conn, packet));
     }
 }

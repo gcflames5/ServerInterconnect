@@ -8,6 +8,7 @@ import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
+import java.sql.Connection;
 
 /**
  * Takes incoming connections, checks them for SSL viability, and then passes them on to a TcpServerManager
@@ -39,8 +40,7 @@ public class IncomingConnectionThread extends Thread {
             Socket incomingConn = serversocket.accept();
             if (!(incomingConn instanceof SSLSocket))
                 throw new RuntimeException("Non-SSL Connection detected! Rejecting " + incomingConn.getInetAddress());
-            TcpConnection tcpConn = new TcpConnection((SSLSocket) incomingConn);
-            manager.submitConnection(tcpConn);
+            handleConnection(incomingConn);
         } catch (SocketException e) {
             System.err.println("Socket closed... terminating listening thread.");
             return false;
@@ -51,5 +51,8 @@ public class IncomingConnectionThread extends Thread {
         return true;
     }
 
-
+    protected void handleConnection(Socket incomingConn) throws IOException {
+        TcpConnection tcpConn = new TcpConnection((SSLSocket) incomingConn);
+        manager.submitConnection(tcpConn);
+    }
 }

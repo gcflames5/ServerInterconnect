@@ -9,7 +9,6 @@ import net.njay.serverinterconnect.event.connection.auth.AuthenticationSuccessEv
 import net.njay.serverinterconnect.packet.auth.AccessRequestPacket;
 import net.njay.serverinterconnect.packet.auth.AuthenticationRequestPacket;
 import net.njay.serverinterconnect.packet.reject.RejectionPacket;
-import net.njay.serverinterconnect.packet.reject.RejectionReason;
 import net.njay.serverinterconnect.packet.reponse.Response;
 import net.njay.serverinterconnect.packet.success.SuccessPacket;
 import net.njay.serverinterconnect.single.client.TcpClientManager;
@@ -20,17 +19,21 @@ import java.util.UUID;
 
 public class AuthenticatedTcpClientManager extends TcpClientManager {
 
+    protected AuthenticationPacket authenticationPacket;
+
     /**
      * Constructor.
      *
      * @param address host name to connect to
      * @param port    port to connect to
      */
-    public AuthenticatedTcpClientManager(String address, int port) {
+    public AuthenticatedTcpClientManager(String address, int port, AuthenticationPacket authenticationPacket) {
         super(address, port);
+        this.authenticationPacket = authenticationPacket;
     }
 
-    public void initialize(AuthenticationPacket authenticationPacket) throws IOException {
+    @Override
+    public void initialize() throws IOException {
         socket = TcpSocketFactory.generateSocket(address, port, false);
         activeConnection = new TcpConnection(socket);
         sendAccessPacket(authenticationPacket);
