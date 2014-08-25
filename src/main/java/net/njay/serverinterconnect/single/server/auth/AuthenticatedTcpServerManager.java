@@ -21,8 +21,8 @@ import java.util.List;
 
 public class AuthenticatedTcpServerManager extends TcpServerManager {
 
-    private Authenticator authenticator;
-    private List<TcpConnection> unAuthenticatedConnections;
+    protected Authenticator authenticator;
+    protected List<TcpConnection> unAuthenticatedConnections;
 
     public AuthenticatedTcpServerManager(SSLServerSocket serversocket, Authenticator authenticator, Class<? extends AuthenticationPacket> authPacketClass, boolean start) {
         super(serversocket, start);

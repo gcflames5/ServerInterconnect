@@ -1,10 +1,20 @@
 package net.njay.serverinterconnect.mesh;
 
+import event.Event;
 import net.njay.serverinterconnect.api.manager.ServerManager;
+import net.njay.serverinterconnect.api.packet.AuthenticationPacket;
 import net.njay.serverinterconnect.api.packet.Packet;
 import net.njay.serverinterconnect.connection.TcpConnection;
 import net.njay.serverinterconnect.connection.TcpSocketFactory;
 import net.njay.serverinterconnect.connection.TcpWriteThread;
+import net.njay.serverinterconnect.event.connection.auth.AuthenticationFailureEvent;
+import net.njay.serverinterconnect.event.connection.auth.AuthenticationSuccessEvent;
+import net.njay.serverinterconnect.packet.auth.AccessRequestPacket;
+import net.njay.serverinterconnect.packet.auth.AuthenticationRequestPacket;
+import net.njay.serverinterconnect.packet.reject.RejectionPacket;
+import net.njay.serverinterconnect.packet.reponse.Response;
+import net.njay.serverinterconnect.packet.success.SuccessPacket;
+import net.njay.serverinterconnect.utils.response.ResponseUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,11 +24,11 @@ import java.util.UUID;
 
 public class Mesh {
 
-    private List<UUID> recentPacketIds;
-    private ServerManager serverManager;
+    protected List<UUID> recentPacketIds;
+    protected ServerManager serverManager;
 
-    private String[] ipsToConnect;
-    private int port;
+    protected String[] ipsToConnect;
+    protected int port;
 
     public Mesh(int listenPort, String... ipsToConnect) {
         recentPacketIds = Collections.synchronizedList(new ArrayList<UUID>());

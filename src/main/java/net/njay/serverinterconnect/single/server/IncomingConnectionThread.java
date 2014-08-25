@@ -24,6 +24,8 @@ public class IncomingConnectionThread extends Thread {
      */
     public IncomingConnectionThread(ServerManager manager) {
         this.manager = manager;
+        System.out.println(manager);
+        System.out.println(manager.getServerSocket());
         this.serversocket = manager.getServerSocket();
     }
 
