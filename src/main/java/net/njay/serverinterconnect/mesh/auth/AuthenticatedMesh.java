@@ -3,6 +3,7 @@ package net.njay.serverinterconnect.mesh.auth;
 import event.Event;
 import net.njay.serverinterconnect.api.auth.Authenticator;
 import net.njay.serverinterconnect.api.packet.AuthenticationPacket;
+import net.njay.serverinterconnect.api.packet.Packet;
 import net.njay.serverinterconnect.connection.TcpConnection;
 import net.njay.serverinterconnect.connection.TcpSocketFactory;
 import net.njay.serverinterconnect.connection.TcpWriteThread;
@@ -18,17 +19,40 @@ import net.njay.serverinterconnect.packet.success.SuccessPacket;
 import net.njay.serverinterconnect.utils.response.ResponseUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class AuthenticatedMesh extends Mesh {
 
     protected Authenticator authenticator;
     protected AuthenticationPacket authPacket;
+    protected List<Packet> preAuthPacketBuffer;
+    protected boolean authenticated;
 
     public AuthenticatedMesh(Authenticator authenticator, AuthenticationPacket authPacket, int listenPort, String... ipsToConnect) {
         super(listenPort, ipsToConnect);
         this.authenticator = authenticator;
         this.authPacket = authPacket;
+        this.preAuthPacketBuffer = new ArrayList<Packet>();
+    }
+
+    public void sendPacketSafely(Packet packet){
+        if (!isAuthenticated())
+            preAuthPacketBuffer.add(packet);
+    }
+
+    public void setAuthenticated(boolean authenticated){
+        this.authenticated = authenticated;
+        if (isAuthenticated()) {
+            for (Packet p : preAuthPacketBuffer)
+                getServerManager().broadcast(p);
+            preAuthPacketBuffer.clear();
+        }
+    }
+
+    public boolean isAuthenticated(){
+        return authenticated;
     }
 
     @Override
@@ -83,6 +107,7 @@ public class AuthenticatedMesh extends Mesh {
                     Event.callEvent(new AuthenticationFailureEvent(event.getConnection()));
                 }else if (packet instanceof SuccessPacket){
                     Event.callEvent(new AuthenticationSuccessEvent(event.getConnection()));
+                    setAuthenticated(true);
                 }else{
                     throw new RuntimeException("Unexpected Packet!");
                 }
