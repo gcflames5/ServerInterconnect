@@ -8,7 +8,6 @@ import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
-import java.sql.Connection;
 
 /**
  * Takes incoming connections, checks them for SSL viability, and then passes them on to a TcpServerManager

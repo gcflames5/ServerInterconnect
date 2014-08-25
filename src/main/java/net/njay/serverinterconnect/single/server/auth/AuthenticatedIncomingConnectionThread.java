@@ -7,7 +7,6 @@ import net.njay.serverinterconnect.single.server.IncomingConnectionThread;
 import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.SocketException;
 
 public class AuthenticatedIncomingConnectionThread extends IncomingConnectionThread {
 

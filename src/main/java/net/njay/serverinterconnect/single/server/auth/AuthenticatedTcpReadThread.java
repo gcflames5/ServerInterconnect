@@ -7,13 +7,8 @@ import net.njay.serverinterconnect.connection.TcpConnection;
 import net.njay.serverinterconnect.connection.TcpReadThread;
 import net.njay.serverinterconnect.event.PacketRecievedEvent;
 import net.njay.serverinterconnect.packet.auth.AccessRequestPacket;
-import net.njay.serverinterconnect.packet.auth.AuthenticationRequestPacket;
 import net.njay.serverinterconnect.packet.reject.RejectionPacket;
 import net.njay.serverinterconnect.packet.reject.RejectionReason;
-import net.njay.serverinterconnect.utils.packet.PacketUtils;
-
-import java.io.IOException;
-import java.net.SocketTimeoutException;
 
 public class AuthenticatedTcpReadThread extends TcpReadThread {
 

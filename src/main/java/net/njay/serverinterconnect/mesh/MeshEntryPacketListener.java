@@ -2,15 +2,11 @@ package net.njay.serverinterconnect.mesh;
 
 import net.njay.serverinterconnect.connection.TcpConnection;
 import net.njay.serverinterconnect.connection.TcpWriteThread;
-import net.njay.serverinterconnect.mesh.Mesh;
-import net.njay.serverinterconnect.mesh.MeshConnection;
-import net.njay.serverinterconnect.mesh.MeshServerManager;
 import net.njay.serverinterconnect.single.server.IncomingConnectionThread;
 
 import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.SocketException;
 
 public class MeshEntryPacketListener extends IncomingConnectionThread {
 
