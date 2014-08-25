@@ -3,11 +3,12 @@ package net.njay.serverinterconnect.connection;
 import net.njay.serverinterconnect.api.packet.Packet;
 import net.njay.serverinterconnect.utils.packet.PacketUtils;
 
+import java.io.IOException;
 import java.net.SocketTimeoutException;
 
 public class TcpWriteThread extends Thread {
 
-    private TcpConnection conn;
+    protected TcpConnection conn;
 
     public TcpWriteThread(TcpConnection conn) {
         this.conn = conn;
@@ -16,12 +17,8 @@ public class TcpWriteThread extends Thread {
     @Override
     public void run() {
         while (!conn.isTerminated()) {
-            Packet p;
             try {
-                p = conn.getQueue().take();
-                if (p == null)
-                    continue;
-                PacketUtils.writePacket(p, conn.outputStream());
+                sendPacket();
             } catch (SocketTimeoutException e) {
                 conn.terminate();
                 e.printStackTrace();
@@ -32,5 +29,11 @@ public class TcpWriteThread extends Thread {
                 break;
             }
         }
+    }
+
+    protected void sendPacket() throws InterruptedException, IOException {
+        Packet p = conn.getQueue().take();
+        if (p == null) return;
+        PacketUtils.writePacket(p, conn.outputStream());
     }
 }
