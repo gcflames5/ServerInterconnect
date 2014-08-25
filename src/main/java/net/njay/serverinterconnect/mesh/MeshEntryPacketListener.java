@@ -1,6 +1,7 @@
-package net.njay.serverinterconnect.mesh.incoming;
+package net.njay.serverinterconnect.mesh;
 
 import net.njay.serverinterconnect.connection.TcpConnection;
+import net.njay.serverinterconnect.connection.TcpWriteThread;
 import net.njay.serverinterconnect.mesh.Mesh;
 import net.njay.serverinterconnect.mesh.MeshConnection;
 import net.njay.serverinterconnect.mesh.MeshServerManager;
@@ -21,21 +22,11 @@ public class MeshEntryPacketListener extends IncomingConnectionThread {
     }
 
     @Override
-    public boolean waitForConnection() {
-        try {
-            Socket incomingConn = serversocket.accept();
-            if (!(incomingConn instanceof SSLSocket))
-                throw new RuntimeException("Non-SSL Connection detected! Rejecting " + incomingConn.getInetAddress());
-            TcpConnection tcpConn = new MeshConnection(mesh, (SSLSocket) incomingConn);
-            manager.submitConnection(tcpConn);
-        } catch (SocketException e) {
-            System.err.println("Socket closed... terminating listening thread.");
-            return false;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
+    protected void handleConnection(Socket incomingConn) throws IOException {
+        TcpConnection tcpConnection = new TcpConnection((SSLSocket) incomingConn, false);
+        tcpConnection.startThreads(new TcpWriteThread(tcpConnection), new MeshReadThread(tcpConnection, mesh));
+        manager.submitConnection(tcpConnection);
+
     }
 
     public void terminate() {

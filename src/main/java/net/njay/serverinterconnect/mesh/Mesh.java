@@ -4,6 +4,7 @@ import net.njay.serverinterconnect.api.manager.ServerManager;
 import net.njay.serverinterconnect.api.packet.Packet;
 import net.njay.serverinterconnect.connection.TcpConnection;
 import net.njay.serverinterconnect.connection.TcpSocketFactory;
+import net.njay.serverinterconnect.connection.TcpWriteThread;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class Mesh {
     private String[] ipsToConnect;
     private int port;
 
-    public Mesh(String password, int listenPort, String... ipsToConnect) {
+    public Mesh(int listenPort, String... ipsToConnect) {
         recentPacketIds = Collections.synchronizedList(new ArrayList<UUID>());
         this.ipsToConnect = ipsToConnect;
         this.port = listenPort;
@@ -52,7 +53,8 @@ public class Mesh {
             else
                 port = this.port;
             try {
-                TcpConnection tcpConnection = new MeshConnection(this, TcpSocketFactory.generateSocket(ip.split(":")[0], port, false));
+                TcpConnection tcpConnection = new TcpConnection(TcpSocketFactory.generateSocket(ip.split(":")[0], port, false), false);
+                tcpConnection.startThreads(new TcpWriteThread(tcpConnection), new MeshReadThread(tcpConnection, this));
                 serverManager.submitConnection(tcpConnection);
             } catch (IOException e) {
                 e.printStackTrace();

@@ -1,7 +1,6 @@
 package net.njay.serverinterconnect.mesh;
 
 import net.njay.serverinterconnect.api.connection.Connection;
-import net.njay.serverinterconnect.mesh.incoming.MeshEntryPacketListener;
 import net.njay.serverinterconnect.single.server.TcpServerManager;
 
 import javax.net.ssl.SSLServerSocket;

@@ -1,4 +1,4 @@
-package net.njay.serverinterconnect.mesh.thread;
+package net.njay.serverinterconnect.mesh;
 
 import event.Event;
 import net.njay.serverinterconnect.api.packet.Packet;
@@ -21,21 +21,10 @@ public class MeshReadThread extends TcpReadThread {
     }
 
     @Override
-    public void run() {
-        while (!conn.isTerminated()) {
-            try {
-                Packet p = PacketUtils.readPacket(conn.inputStream());
-                if (!mesh.recieved(p)) {
-                    mesh.addRecentPacket(p);
-                    Event.callEvent(new PacketRecievedEvent(conn, p));
-                }
-            } catch (SocketTimeoutException e) {
-                conn.terminate();
-                break;
-            } catch (IOException e) {
-                conn.terminate();
-                break;
-            }
+    public void handlePacket(Packet p){
+        if (!mesh.recieved(p)) {
+            mesh.addRecentPacket(p);
+            Event.callEvent(new PacketRecievedEvent(conn, p));
         }
     }
 }

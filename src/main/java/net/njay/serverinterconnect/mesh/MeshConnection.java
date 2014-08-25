@@ -2,7 +2,6 @@ package net.njay.serverinterconnect.mesh;
 
 import net.njay.serverinterconnect.connection.TcpConnection;
 import net.njay.serverinterconnect.connection.TcpWriteThread;
-import net.njay.serverinterconnect.mesh.thread.MeshReadThread;
 
 import javax.net.ssl.SSLSocket;
 import java.io.IOException;
