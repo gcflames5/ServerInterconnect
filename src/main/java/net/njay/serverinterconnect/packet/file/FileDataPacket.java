@@ -3,7 +3,7 @@ package net.njay.serverinterconnect.packet.file;
 import net.njay.serverinterconnect.packet.JsonPacket;
 
 public class FileDataPacket extends JsonPacket{
-    
+
     protected int id;
     protected byte[] data;
 

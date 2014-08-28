@@ -3,6 +3,8 @@ package net.njay.serverinterconnect;
 import net.njay.serverinterconnect.packet.PacketRegistry;
 import net.njay.serverinterconnect.packet.auth.AccessRequestPacket;
 import net.njay.serverinterconnect.packet.auth.AuthenticationRequestPacket;
+import net.njay.serverinterconnect.packet.file.FileDataPacket;
+import net.njay.serverinterconnect.packet.file.FileInfoPacket;
 import net.njay.serverinterconnect.packet.message.JsonMessagePacket;
 import net.njay.serverinterconnect.packet.message.MessagePacket;
 import net.njay.serverinterconnect.packet.reject.RejectionPacket;
@@ -18,6 +20,9 @@ public class ServerInterconnect {
 
         PacketRegistry.registerPacket(MessagePacket.class);
         PacketRegistry.registerPacket(JsonMessagePacket.class);
+
+        PacketRegistry.registerPacket(FileInfoPacket.class);
+        PacketRegistry.registerPacket(FileDataPacket.class);
     }
 
 }
